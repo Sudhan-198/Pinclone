@@ -1,6 +1,7 @@
 const router = require("express").Router();
 
 const multer = require("multer");
+const path = require("path");
 
 const db = require("../db/db");
 
@@ -14,7 +15,11 @@ const storage = multer.diskStorage({
 
   filename: (req, file, cb) => {
 
-    cb(null, Date.now() + file.originalname);
+    cb(
+      null,
+      Date.now() +
+      path.extname(file.originalname)
+    );
 
   }
 
@@ -24,32 +29,53 @@ const upload = multer({ storage });
 
 router.post("/", upload.single("image"), (req, res) => {
 
-  const {
-    title,
-    userId,
-    username,
-    bio
-  } = req.body;
+  try {
 
-  const image = req.file.filename;
+    const {
+      title,
+      userId,
+      username,
+      bio
+    } = req.body;
 
-  db.run(
-    "INSERT INTO posts(title,image,userId,username,bio,likedBy) VALUES(?,?,?,?,?,?)",
-    [title, image, userId, username, bio, ""],
-    function (err) {
+    const image = req.file.filename;
 
-      if (err) {
+    db.run(
+      `INSERT INTO posts
+      (title,image,userId,username,bio,likedBy)
+      VALUES(?,?,?,?,?,?)`,
+      [
+        title,
+        image,
+        userId,
+        username,
+        bio,
+        ""
+      ],
+      function (err) {
 
-        return res.status(400).json(err);
+        if (err) {
+
+          console.log(err);
+
+          return res.status(400).json(err);
+
+        }
+
+        res.json({
+          message: "Post uploaded"
+        });
 
       }
+    );
 
-      res.json({
-        message: "Post uploaded"
-      });
+  } catch (err) {
 
-    }
-  );
+    console.log(err);
+
+    res.status(500).json(err);
+
+  }
 
 });
 
@@ -59,6 +85,12 @@ router.get("/", (req, res) => {
     "SELECT * FROM posts ORDER BY id DESC",
     [],
     (err, rows) => {
+
+      if (err) {
+
+        return res.status(400).json(err);
+
+      }
 
       res.json(rows);
 
@@ -127,11 +159,9 @@ router.put("/like/:id", (req, res) => {
 
 router.delete("/:id", (req, res) => {
 
-  const postId = req.params.id;
-
   db.run(
     "DELETE FROM posts WHERE id=?",
-    [postId],
+    [req.params.id],
     function (err) {
 
       if (err) {
@@ -141,7 +171,7 @@ router.delete("/:id", (req, res) => {
       }
 
       res.json({
-        message: "Post deleted"
+        message: "Deleted"
       });
 
     }
