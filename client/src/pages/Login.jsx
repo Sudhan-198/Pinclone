@@ -1,0 +1,101 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+import axios from "axios";
+
+function Login() {
+
+  const navigate = useNavigate();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = async () => {
+
+    try {
+
+      const res = await axios.post(
+        "http://localhost:5000/api/auth/login",
+        {
+          email,
+          password
+        }
+      );
+
+      localStorage.setItem(
+        "token",
+        res.data.token
+      );
+
+      localStorage.setItem(
+        "user",
+        JSON.stringify(res.data.user)
+      );
+
+      alert("Login successful");
+
+      navigate("/");
+
+    } catch (err) {
+
+      console.log(err);
+
+      alert("Login failed");
+
+    }
+
+  };
+
+  return (
+
+    <div className="min-h-screen flex items-center justify-center p-6">
+
+      <div className="bg-white/70 backdrop-blur-md p-8 rounded-3xl shadow-2xl border border-white/40 w-[400px]">
+
+        <h1 className="text-4xl font-extrabold text-center mb-8 text-purple-600">
+          Welcome Back
+        </h1>
+
+        <input
+          type="email"
+          placeholder="Email"
+          className="w-full border border-pink-200 p-3 rounded-2xl mb-5 outline-none focus:ring-2 focus:ring-pink-400"
+          onChange={(e) => setEmail(e.target.value)}
+        />
+
+        <input
+          type="password"
+          placeholder="Password"
+          className="w-full border border-pink-200 p-3 rounded-2xl mb-6 outline-none focus:ring-2 focus:ring-pink-400"
+          onChange={(e) => setPassword(e.target.value)}
+        />
+
+        <button
+          onClick={handleLogin}
+          className="w-full bg-gradient-to-r from-pink-500 to-purple-600 text-white p-3 rounded-2xl font-semibold hover:scale-105 transition-all duration-300 shadow-lg"
+        >
+          Login
+        </button>
+
+        <p className="text-center mt-6 text-gray-600">
+
+          Dont have an account?
+
+          <span
+            onClick={() => navigate("/register")}
+            className="text-purple-600 font-semibold cursor-pointer ml-1"
+          >
+            Register
+          </span>
+
+        </p>
+
+      </div>
+
+    </div>
+
+  );
+
+}
+
+export default Login;
