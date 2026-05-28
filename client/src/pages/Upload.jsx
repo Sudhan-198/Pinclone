@@ -30,7 +30,7 @@ function Upload() {
     try {
 
       await axios.post(
-        "http://localhost:5000/api/posts",
+        "https://pinclone-backend-6jfa.onrender.com/api/posts",
         formData
       );
 

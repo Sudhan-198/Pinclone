@@ -19,7 +19,7 @@ function UserProfile() {
   useEffect(() => {
 
     axios
-      .get("http://localhost:5000/api/posts")
+      .get("https://pinclone-backend-6jfa.onrender.com/api/posts")
       .then((res) => {
 
         const filteredPosts = res.data.filter(
@@ -104,7 +104,7 @@ function UserProfile() {
               >
 
                 <img
-                  src={`http://localhost:5000/uploads/${post.image}`}
+                  src={`https://pinclone-backend-6jfa.onrender.com/uploads/${post.image}`}
                   alt=""
                   className="w-full hover:scale-105 transition-all duration-500"
                 />

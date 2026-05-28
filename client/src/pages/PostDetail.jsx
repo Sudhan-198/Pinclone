@@ -16,7 +16,7 @@ function PostDetail() {
   useEffect(() => {
 
     axios
-      .get("http://localhost:5000/api/posts")
+      .get("https://pinclone-backend-6jfa.onrender.com/api/posts")
       .then((res) => {
 
         const foundPost = res.data.find(
@@ -65,7 +65,7 @@ function PostDetail() {
           <div>
 
             <img
-              src={`http://localhost:5000/uploads/${post.image}`}
+              src={`https://pinclone-backend-6jfa.onrender.com/uploads/${post.image}`}
               alt=""
               className="w-full h-full object-cover"
             />

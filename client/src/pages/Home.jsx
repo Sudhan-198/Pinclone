@@ -17,7 +17,7 @@ function Home() {
   useEffect(() => {
 
     axios
-      .get("http://localhost:5000/api/posts")
+      .get("https://pinclone-backend-6jfa.onrender.com/api/posts")
       .then((res) => {
 
         setPosts(res.data);
@@ -38,7 +38,7 @@ function Home() {
     try {
 
       const res = await axios.put(
-        `http://localhost:5000/api/posts/like/${id}`,
+        `https://pinclone-backend-6jfa.onrender.com/api/posts/like/${id}`,
         {
           userId: user.id
         }
@@ -123,7 +123,7 @@ function Home() {
                 >
 
                   <img
-                    src={`http://localhost:5000/uploads/${post.image}`}
+                    src={`https://pinclone-backend-6jfa.onrender.com/uploads/${post.image}`}
                     alt=""
                     className="w-full hover:scale-105 transition-all duration-500"
                   />

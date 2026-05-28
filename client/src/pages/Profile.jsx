@@ -23,7 +23,7 @@ function Profile() {
   useEffect(() => {
 
     axios
-      .get("http://localhost:5000/api/posts")
+      .get("https://pinclone-backend-6jfa.onrender.com/api/posts")
       .then((res) => {
 
         const filteredPosts = res.data.filter(
@@ -41,7 +41,7 @@ function Profile() {
     try {
 
       await axios.delete(
-        `http://localhost:5000/api/posts/${id}`
+        `https://pinclone-backend-6jfa.onrender.com/api/posts/${id}`
       );
 
       setPosts((prevPosts) =>
@@ -61,7 +61,7 @@ function Profile() {
     try {
 
       const res = await axios.put(
-        `http://localhost:5000/api/auth/profile/${currentUser.id}`,
+        `https://pinclone-backend-6jfa.onrender.com/api/auth/profile/${currentUser.id}`,
         {
           username,
           bio
@@ -217,7 +217,7 @@ function Profile() {
               >
 
                 <img
-                  src={`http://localhost:5000/uploads/${post.image}`}
+                  src={`https://pinclone-backend-6jfa.onrender.com/uploads/${post.image}`}
                   alt=""
                   className="w-full hover:scale-105 transition-all duration-500"
                 />
