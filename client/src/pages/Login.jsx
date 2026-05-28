@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+
+import { Link, useNavigate } from "react-router-dom";
 
 import axios from "axios";
 
@@ -32,8 +33,6 @@ function Login() {
         JSON.stringify(res.data.user)
       );
 
-      alert("Login successful");
-
       navigate("/");
 
     } catch (err) {
@@ -48,46 +47,43 @@ function Login() {
 
   return (
 
-    <div className="min-h-screen flex items-center justify-center p-6">
+    <div className="min-h-screen flex items-center justify-center">
 
-      <div className="bg-white/70 backdrop-blur-md p-8 rounded-3xl shadow-2xl border border-white/40 w-[400px]">
+      <div className="bg-white p-10 rounded-3xl shadow-2xl w-[400px]">
 
-        <h1 className="text-4xl font-extrabold text-center mb-8 text-purple-600">
-          Welcome Back
+        <h1 className="text-5xl font-bold text-center text-purple-600 mb-8">
+          Login
         </h1>
 
         <input
           type="email"
           placeholder="Email"
-          className="w-full border border-pink-200 p-3 rounded-2xl mb-5 outline-none focus:ring-2 focus:ring-pink-400"
+          className="w-full border p-4 rounded-2xl mb-4"
           onChange={(e) => setEmail(e.target.value)}
         />
 
         <input
           type="password"
           placeholder="Password"
-          className="w-full border border-pink-200 p-3 rounded-2xl mb-6 outline-none focus:ring-2 focus:ring-pink-400"
+          className="w-full border p-4 rounded-2xl mb-6"
           onChange={(e) => setPassword(e.target.value)}
         />
 
         <button
           onClick={handleLogin}
-          className="w-full bg-gradient-to-r from-pink-500 to-purple-600 text-white p-3 rounded-2xl font-semibold hover:scale-105 transition-all duration-300 shadow-lg"
+          className="w-full bg-gradient-to-r from-pink-500 to-purple-600 text-white py-4 rounded-2xl font-bold hover:scale-105 transition-all"
         >
           Login
         </button>
 
-        <p className="text-center mt-6 text-gray-600">
-
-          Dont have an account?
-
-          <span
-            onClick={() => navigate("/register")}
-            className="text-purple-600 font-semibold cursor-pointer ml-1"
+        <p className="mt-6 text-center text-gray-600">
+          Don’t have an account?{" "}
+          <Link
+            to="/register"
+            className="text-purple-600 font-bold"
           >
             Register
-          </span>
-
+          </Link>
         </p>
 
       </div>
